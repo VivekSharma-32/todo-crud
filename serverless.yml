@@ -1,0 +1,66 @@
+service: todo-api
+
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:Scan
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [TodoTable, Arn]
+
+  environment:
+    TODO_TABLE: !Ref TodoTable
+
+functions:
+  create_todo:
+    handler: src/lambdas/todo/create.handler
+    events:
+      - http:
+          path: /todo
+          method: post
+
+  # list_todo:
+  #   handler: src/lambdas/todo/list.handler
+  #   events:
+  #     - http:
+  #         path: /todo
+  #         method: get
+  # update_todo:
+  #   handler: src/lambdas/todo/update.handler
+  #   events:
+  #     - http:
+  #         path: /todo/update
+  #         method: update
+  # delete_todo:
+  #   handler: src/lambdas/todo/delete.handler
+  #   events:
+  #     - http:
+  #         path: /todo/delete
+  #         method: delete
+
+resources:
+  Resources:
+    TodoTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}_${self:provider.stage}_ToDo
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST

@@ -1,0 +1,31 @@
+{
+  "name": "sls-crud-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "sls deploy",
+    "remove": "sls remove"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.172.0",
+    "@aws-sdk/lib-dynamodb": "^3.172.0",
+    "http-status-codes": "^2.2.0",
+    "joi": "^17.6.2",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.106",
+    "serverless": "^3.22.0",
+    "serverless-webpack": "5.10.0",
+    "ts-loader": "9.4.1",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "4.1.0",
+    "tsconfig-paths-webpack-plugin": "4.0.0",
+    "typescript": "4.8.4",
+    "webpack": "5.74.0"
+  }
+}

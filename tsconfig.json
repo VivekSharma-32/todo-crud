@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist",
+    "sourceMap": true,
+    "module": "commonjs",
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es6", "dom", "esnext"],
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "src",
+    "paths": {
+      "@data/*": ["data/*"],
+      "@configs/*": ["configs/*"],
+      "@entities/*": ["entities/*"],
+      "@enums/*": ["enums/*"],
+      "@interfaces/*": ["interfaces/*"],
+      "@lib/*": ["lib/*"],
+      "@lambdas/*": ["lambdas/*"],
+      "@middleware/*": ["middleware/*"],
+      "@models/*": ["models/*"],
+      "@repositories/*": ["repositories/*"],
+      "@services/*": ["services/*"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
+}
