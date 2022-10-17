@@ -16,7 +16,6 @@ provider:
             - dynamodb:GetItem
             - dynamodb:Scan
             - dynamodb:PutItem
-            - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
             - Fn::GetAtt: [TodoTable, Arn]
@@ -32,24 +31,31 @@ functions:
           path: /todo
           method: post
 
-  # list_todo:
-  #   handler: src/lambdas/todo/list.handler
-  #   events:
-  #     - http:
-  #         path: /todo
-  #         method: get
-  # update_todo:
-  #   handler: src/lambdas/todo/update.handler
-  #   events:
-  #     - http:
-  #         path: /todo/update
-  #         method: update
-  # delete_todo:
-  #   handler: src/lambdas/todo/delete.handler
-  #   events:
-  #     - http:
-  #         path: /todo/delete
-  #         method: delete
+  list_todo:
+    handler: src/lambdas/todo/list.handler
+    events:
+      - http:
+          path: /todo
+          method: get
+
+  get_todo:
+    handler: src/lambdas/todo/get.handler
+    events:
+      - http:
+          path: /todo/{id}
+          method: get
+  update_todo:
+    handler: src/lambdas/todo/update.handler
+    events:
+      - http:
+          path: /todo/{id}
+          method: patch
+  delete_todo:
+    handler: src/lambdas/todo/delete.handler
+    events:
+      - http:
+          path: /todo/{id}
+          method: delete
 
 resources:
   Resources:

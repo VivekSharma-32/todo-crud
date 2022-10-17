@@ -18,7 +18,6 @@
                 "dynamodb:GetItem",
                 "dynamodb:Scan",
                 "dynamodb:PutItem",
-                "dynamodb:UpdateItem",
                 "dynamodb:DeleteItem"
               ],
               "Resource": [
@@ -118,6 +117,30 @@
               "LogGroupName": "/aws/lambda/todo-api-dev-create_todo"
             }
           },
+          "ListUnderscoretodoLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/todo-api-dev-list_todo"
+            }
+          },
+          "GetUnderscoretodoLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/todo-api-dev-get_todo"
+            }
+          },
+          "UpdateUnderscoretodoLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/todo-api-dev-update_todo"
+            }
+          },
+          "DeleteUnderscoretodoLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/todo-api-dev-delete_todo"
+            }
+          },
           "IamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -205,7 +228,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/todo-api/dev/1665314775460-2022-10-09T11:26:15.460Z/todo-api.zip"
+                "S3Key": "serverless/todo-api/dev/1665939060645-2022-10-16T16:51:00.645Z/todo-api.zip"
               },
               "Handler": "src/lambdas/todo/create.handler",
               "Runtime": "nodejs14.x",
@@ -230,14 +253,182 @@
               "CreateUnderscoretodoLogGroup"
             ]
           },
-          "CreateUnderscoretodoLambdaVersionxw1GCFCYPw2ViWgZddPC4zdiXYOq88YgPulgJmKI": {
+          "ListUnderscoretodoLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/todo-api/dev/1665939060645-2022-10-16T16:51:00.645Z/todo-api.zip"
+              },
+              "Handler": "src/lambdas/todo/list.handler",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "todo-api-dev-list_todo",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "TODO_TABLE": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"TODO_TABLE\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ListUnderscoretodoLogGroup"
+            ]
+          },
+          "GetUnderscoretodoLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/todo-api/dev/1665939060645-2022-10-16T16:51:00.645Z/todo-api.zip"
+              },
+              "Handler": "src/lambdas/todo/get.handler",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "todo-api-dev-get_todo",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "TODO_TABLE": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"TODO_TABLE\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetUnderscoretodoLogGroup"
+            ]
+          },
+          "UpdateUnderscoretodoLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/todo-api/dev/1665939060645-2022-10-16T16:51:00.645Z/todo-api.zip"
+              },
+              "Handler": "src/lambdas/todo/update.handler",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "todo-api-dev-update_todo",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "TODO_TABLE": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"TODO_TABLE\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "UpdateUnderscoretodoLogGroup"
+            ]
+          },
+          "DeleteUnderscoretodoLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/todo-api/dev/1665939060645-2022-10-16T16:51:00.645Z/todo-api.zip"
+              },
+              "Handler": "src/lambdas/todo/delete.handler",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "todo-api-dev-delete_todo",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "TODO_TABLE": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"TODO_TABLE\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DeleteUnderscoretodoLogGroup"
+            ]
+          },
+          "CreateUnderscoretodoLambdaVersionKwjutn7sc5Elja2AOaVZx47cbAFsAWLd8vlPEkTuNTs": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateUnderscoretodoLambdaFunction"
               },
-              "CodeSha256": "chI06hToGZ/OiK36Y+/bg3QjyK8Z5F8Fdv1egU6aYCA="
+              "CodeSha256": "60GWN0ZSrlmZTgFugGDBsWUvT8v9iwVRY4nwmUrmxt8="
+            }
+          },
+          "ListUnderscoretodoLambdaVersionSoTJAtUHxxUqb3WRQovlRAHHdLJkjgHc8oHMjSPw": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ListUnderscoretodoLambdaFunction"
+              },
+              "CodeSha256": "60GWN0ZSrlmZTgFugGDBsWUvT8v9iwVRY4nwmUrmxt8="
+            }
+          },
+          "GetUnderscoretodoLambdaVersionvKFfz1bjSvb4UYGzmTH5QGbdTLau4uTwsZrSBE5VXU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetUnderscoretodoLambdaFunction"
+              },
+              "CodeSha256": "60GWN0ZSrlmZTgFugGDBsWUvT8v9iwVRY4nwmUrmxt8="
+            }
+          },
+          "UpdateUnderscoretodoLambdaVersionc9tmcOC8LitKPOccGKIbdWlYsb8SMo5WnaLCNsioEA": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateUnderscoretodoLambdaFunction"
+              },
+              "CodeSha256": "60GWN0ZSrlmZTgFugGDBsWUvT8v9iwVRY4nwmUrmxt8="
+            }
+          },
+          "DeleteUnderscoretodoLambdaVersionU0YmMowqne4hFaUTut5BTiVGKj0rLuRUZrc1FRzLFQ": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteUnderscoretodoLambdaFunction"
+              },
+              "CodeSha256": "60GWN0ZSrlmZTgFugGDBsWUvT8v9iwVRY4nwmUrmxt8="
             }
           },
           "ApiGatewayRestApi": {
@@ -262,6 +453,18 @@
                 ]
               },
               "PathPart": "todo",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceTodoIdVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceTodo"
+              },
+              "PathPart": "{id}",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -313,7 +516,191 @@
               "CreateUnderscoretodoLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1665314757830": {
+          "ApiGatewayMethodTodoGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceTodo"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ListUnderscoretodoLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "ListUnderscoretodoLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodTodoIdVarGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceTodoIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "GetUnderscoretodoLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "GetUnderscoretodoLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodTodoIdVarPatch": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "PATCH",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceTodoIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "UpdateUnderscoretodoLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "UpdateUnderscoretodoLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodTodoIdVarDelete": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "DELETE",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceTodoIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "DeleteUnderscoretodoLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "DeleteUnderscoretodoLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayDeployment1665939047502": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -322,7 +709,11 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodTodoPost"
+              "ApiGatewayMethodTodoPost",
+              "ApiGatewayMethodTodoGet",
+              "ApiGatewayMethodTodoIdVarGet",
+              "ApiGatewayMethodTodoIdVarPatch",
+              "ApiGatewayMethodTodoIdVarDelete"
             ]
           },
           "CreateUnderscoretodoLambdaPermissionApiGateway": {
@@ -331,6 +722,154 @@
               "FunctionName": {
                 "Fn::GetAtt": [
                   "CreateUnderscoretodoLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ListUnderscoretodoLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ListUnderscoretodoLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "GetUnderscoretodoLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetUnderscoretodoLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "UpdateUnderscoretodoLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateUnderscoretodoLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "DeleteUnderscoretodoLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteUnderscoretodoLambdaFunction",
                   "Arn"
                 ]
               },
@@ -394,10 +933,46 @@
           "CreateUnderscoretodoLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateUnderscoretodoLambdaVersionxw1GCFCYPw2ViWgZddPC4zdiXYOq88YgPulgJmKI"
+              "Ref": "CreateUnderscoretodoLambdaVersionKwjutn7sc5Elja2AOaVZx47cbAFsAWLd8vlPEkTuNTs"
             },
             "Export": {
               "Name": "sls-todo-api-dev-CreateUnderscoretodoLambdaFunctionQualifiedArn"
+            }
+          },
+          "ListUnderscoretodoLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ListUnderscoretodoLambdaVersionSoTJAtUHxxUqb3WRQovlRAHHdLJkjgHc8oHMjSPw"
+            },
+            "Export": {
+              "Name": "sls-todo-api-dev-ListUnderscoretodoLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetUnderscoretodoLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetUnderscoretodoLambdaVersionvKFfz1bjSvb4UYGzmTH5QGbdTLau4uTwsZrSBE5VXU"
+            },
+            "Export": {
+              "Name": "sls-todo-api-dev-GetUnderscoretodoLambdaFunctionQualifiedArn"
+            }
+          },
+          "UpdateUnderscoretodoLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateUnderscoretodoLambdaVersionc9tmcOC8LitKPOccGKIbdWlYsb8SMo5WnaLCNsioEA"
+            },
+            "Export": {
+              "Name": "sls-todo-api-dev-UpdateUnderscoretodoLambdaFunctionQualifiedArn"
+            }
+          },
+          "DeleteUnderscoretodoLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteUnderscoretodoLambdaVersionU0YmMowqne4hFaUTut5BTiVGKj0rLuRUZrc1FRzLFQ"
+            },
+            "Export": {
+              "Name": "sls-todo-api-dev-DeleteUnderscoretodoLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -536,7 +1111,91 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "CreateUnderscoretodoLambdaVersionxw1GCFCYPw2ViWgZddPC4zdiXYOq88YgPulgJmKI"
+        "versionLogicalId": "CreateUnderscoretodoLambdaVersionKwjutn7sc5Elja2AOaVZx47cbAFsAWLd8vlPEkTuNTs"
+      },
+      "list_todo": {
+        "handler": "src/lambdas/todo/list.handler",
+        "events": [
+          {
+            "http": {
+              "path": "todo",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "todo-api-dev-list_todo",
+        "package": {
+          "artifact": ".serverless\\todo-api.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "ListUnderscoretodoLambdaVersionSoTJAtUHxxUqb3WRQovlRAHHdLJkjgHc8oHMjSPw"
+      },
+      "get_todo": {
+        "handler": "src/lambdas/todo/get.handler",
+        "events": [
+          {
+            "http": {
+              "path": "todo/{id}",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "todo-api-dev-get_todo",
+        "package": {
+          "artifact": ".serverless\\todo-api.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "GetUnderscoretodoLambdaVersionvKFfz1bjSvb4UYGzmTH5QGbdTLau4uTwsZrSBE5VXU"
+      },
+      "update_todo": {
+        "handler": "src/lambdas/todo/update.handler",
+        "events": [
+          {
+            "http": {
+              "path": "todo/{id}",
+              "method": "patch",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "todo-api-dev-update_todo",
+        "package": {
+          "artifact": ".serverless\\todo-api.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "UpdateUnderscoretodoLambdaVersionc9tmcOC8LitKPOccGKIbdWlYsb8SMo5WnaLCNsioEA"
+      },
+      "delete_todo": {
+        "handler": "src/lambdas/todo/delete.handler",
+        "events": [
+          {
+            "http": {
+              "path": "todo/{id}",
+              "method": "delete",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "todo-api-dev-delete_todo",
+        "package": {
+          "artifact": ".serverless\\todo-api.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "DeleteUnderscoretodoLambdaVersionU0YmMowqne4hFaUTut5BTiVGKj0rLuRUZrc1FRzLFQ"
       }
     },
     "resources": {
@@ -584,7 +1243,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/todo-api/dev/1665314775460-2022-10-09T11:26:15.460Z",
+    "artifactDirectoryName": "serverless/todo-api/dev/1665939060645-2022-10-16T16:51:00.645Z",
     "artifact": ""
   }
 }

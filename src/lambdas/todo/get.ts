@@ -2,7 +2,6 @@ import { APIGatewayProxyEventNormalised } from "@interfaces/api-gateway-proxy-ev
 import { handlerfn } from "@lib/lambda/api-gateway-lambda";
 import { notFound, ok, serverError } from "@lib/response/response";
 import { GetTodoOutputModel } from "@models/todo/get-todo";
-import { ListTodoOutputModel } from "@models/todo/list-todo";
 import { TodoService } from "@services/todo/todo-service";
 
 export const handler = handlerfn(
@@ -10,9 +9,15 @@ export const handler = handlerfn(
     try {
       const todoService = new TodoService();
 
-      const entities = await todoService.list();
+      const { id } = event.pathParameters;
 
-      const outputModel = new ListTodoOutputModel(entities);
+      const entity = await todoService.get(id);
+
+      if (!entity) {
+        return notFound([{ reason: "Todo not found" }]);
+      }
+
+      const outputModel = new GetTodoOutputModel(entity);
 
       return ok(outputModel);
     } catch (ex) {

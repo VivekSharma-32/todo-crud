@@ -32,3 +32,28 @@ export const badRequest = (message) => {
     }),
   };
 };
+export const ok = (dataObj) => {
+  return {
+    statusCode: StatusCodes.OK,
+    headers: { "Access-Control-Allow-Origin": "*" },
+    body: JSON.stringify(dataObj),
+  };
+};
+
+export const okNoContent = () => {
+  return {
+    statusCode: StatusCodes.NO_CONTENT,
+    headers: { "Access-Control-Allow-Origin": "*" },
+  };
+};
+
+export const notFound = (message) => {
+  return {
+    statusCode: StatusCodes.NOT_FOUND,
+    headers: { "Access-Control-Allow-Origin": "*" },
+    body: JSON.stringify({
+      status: "failed",
+      details: message === "string" ? message : JSON.stringify(message),
+    }),
+  };
+};
